@@ -41,6 +41,7 @@ describe('controller', function () {
 
 	var createViewStub = function () {
 		var eventRegistry = {};
+
 		return {
 			render: jasmine.createSpy('render'),
 			bind: function (event, handler) {
@@ -59,7 +60,15 @@ describe('controller', function () {
 	});
 
 	it('should show entries on start-up', function () {
-		// TODO: write test
+		//PREPARE
+		var todos = [{title: 'todo 1'}, {title: 'todo 2'}];
+		setUpModel(todos);
+		//EXECUTE
+		subject.setView('');			
+
+		//VERIFICATION
+		expect(view.render).toHaveBeenCalledWith('showEntries', todos)
+		
 	});
 
 	describe('routing', function () {
@@ -83,11 +92,22 @@ describe('controller', function () {
 		});
 
 		it('should show active entries', function () {
-			// TODO: write test
+			
+			var todos = [{title: 'todo1', completed: true}, {title: 'todo2', completed: false} ]
+			setUpModel(todos)
+
+			subject.showActive();
+			
+			expect(model.read).toHaveBeenCalledWith({completed: false}, jasmine.any(Function))
 		});
 
 		it('should show completed entries', function () {
-			// TODO: write test
+			var todos = [{title: 'todo1', completed: true}, {title: 'todo2', completed: false} ]
+			setUpModel(todos)
+
+			subject.showCompleted();
+			
+			expect(model.read).toHaveBeenCalledWith({completed: true}, jasmine.any(Function))
 		});
 	});
 
