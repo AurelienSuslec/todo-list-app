@@ -198,8 +198,8 @@
 	 *                          or not
 	 * @param {boolean|undefined} silent Prevent re-filtering the todo items
 	 */
-	Controller.prototype.toggleComplete = function (id, completed, silent) {
-		var self = this;
+	Controller.prototype.toggleComplete = function (id, completed, silent) {		
+		var self = this;		
 		self.model.update(id, { completed: completed }, function () {
 			self.view.render('elementComplete', {
 				id: id,
@@ -218,7 +218,7 @@
 	 */
 	Controller.prototype.toggleAll = function (completed) {
 		var self = this;
-		self.model.read({ completed: !completed }, function (data) {
+		self.model.read({ completed: !completed }, function (data) {			
 			data.forEach(function (item) {
 				self.toggleComplete(item.id, completed, true);
 			});
