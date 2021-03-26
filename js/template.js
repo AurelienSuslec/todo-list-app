@@ -1,4 +1,7 @@
 /*jshint laxbreak:true */
+/**
+ * @module Template
+ */
 (function (window) {
 	'use strict';
 
@@ -26,7 +29,7 @@
 
 	/**
 	 * Sets up defaults for all the Template methods such as a default template
-	 *
+	 * @alias Template
 	 * @constructor
 	 */
 	function Template() {
@@ -97,7 +100,7 @@
 	/**
 	 * Updates the text within the "Clear completed" button
 	 *
-	 * @param  {[type]} completedTodos The number of completed todos.
+	 * @param  {type} completedTodos The number of completed todos.
 	 * @returns {string} String containing the count
 	 */
 	Template.prototype.clearCompletedButton = function (completedTodos) {

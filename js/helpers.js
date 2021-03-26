@@ -1,4 +1,7 @@
 /*global NodeList */
+/**
+ * @module Helpers
+ */
 (function (window) {
 	'use strict';
 
