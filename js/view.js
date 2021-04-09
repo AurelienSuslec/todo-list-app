@@ -31,6 +31,14 @@
 		this.$newTodo = qs('.new-todo');
 	}
 
+	/**
+	 * Remove an item from the todo list
+	 *
+	 * @param {number} id The id of the item to remove
+	 * 
+	 * @example
+	 * view._removeItem(2)
+	 */
 	View.prototype._removeItem = function (id) {
 		var elem = qs('[data-id="' + id + '"]');
 
@@ -39,16 +47,42 @@
 		}
 	};
 
+	/**
+	 * Display the clear completed button
+	 *
+	 * @param {number} completedCount The number of completed tasks
+	 * @param {boolean} visible Whether the button should be displayed
+	 * 
+	 * @example
+	 * view._clearCompletedButton(2, true)
+	 */
 	View.prototype._clearCompletedButton = function (completedCount, visible) {
 		this.$clearCompleted.innerHTML = this.template.clearCompletedButton(completedCount);
 		this.$clearCompleted.style.display = visible ? 'block' : 'none';
 	};
 
+	/**
+	 * Highlight the current filter
+	 *
+	 * @param {string} currentPage The current active page
+	 * 
+	 * @example
+	 * view._setFilter(#/completed)
+	 */
 	View.prototype._setFilter = function (currentPage) {
 		qs('.filters .selected').className = '';
 		qs('.filters [href="#/' + currentPage + '"]').className = 'selected';
 	};
 
+	/**
+	 * Toggle an item to completed or not 
+	 *
+	 * @param {number} id The item id
+	 *  @param {boolean} completed The state of the item
+	 * 
+	 * @example
+	 * view._elementComplete(1, true)
+	 */
 	View.prototype._elementComplete = function (id, completed) {
 		var listItem = qs('[data-id="' + id + '"]');
 
@@ -62,6 +96,15 @@
 		qs('input', listItem).checked = completed;
 	};
 
+	/**
+	 * Display an input to edit an item 
+	 *
+	 * @param {number} id The item id
+	 *  @param {string} title The title to edit
+	 * 
+	 * @example
+	 * view._editItem(1, 'Test')
+	 */
 	View.prototype._editItem = function (id, title) {
 		var listItem = qs('[data-id="' + id + '"]');
 
@@ -79,6 +122,15 @@
 		input.value = title;
 	};
 
+	/**
+	 * Remove the input after editing an item
+	 *
+	 * @param {number} id The item id
+	 *  @param {string} title The title to edit
+	 * 
+	 * @example
+	 * view._editItemDone(1, 'Test')
+	 */
 	View.prototype._editItemDone = function (id, title) {
 		var listItem = qs('[data-id="' + id + '"]');
 
@@ -96,6 +148,15 @@
 		});
 	};
 
+	/**
+	 * Trigger the right action according to a command name
+	 *
+	 * @param {string} id The function to call
+	 * @param {object} parameter The parameter of the command
+	 * 
+	 * @example
+	 * view.render("clearCompletedButton", {completed: true, visible: false})
+	 */
 	View.prototype.render = function (viewCmd, parameter) {
 		var self = this;
 		var viewCommands = {
@@ -137,11 +198,28 @@
 		viewCommands[viewCmd]();
 	};
 
+	/**
+	 * Get the item id
+	 *
+	 * @param {Node} element The element to search from
+	 * @return {number} The item id
+	 * 
+	 * @example
+	 * view._itemId(qs('label'))
+	 */
 	View.prototype._itemId = function (element) {
 		var li = $parent(element, 'li');
 		return parseInt(li.dataset.id, 10);
 	};
 
+	/**
+	 * Bind an event after editing of an item is done
+	 *
+	 * @param {function} handler The function to trigger on blur event
+	 * 
+	 * @example
+	 * view._bindItemEditDone(function(){})
+	 */
 	View.prototype._bindItemEditDone = function (handler) {
 		var self = this;
 		$delegate(self.$todoList, 'li .edit', 'blur', function () {
@@ -162,6 +240,14 @@
 		});
 	};
 
+	/**
+	 * Bind an event after editing of an item is canceled
+	 *
+	 * @param {function} handler The function to trigger
+	 * 
+	 * @example
+	 * view._bindItemEditCancel(function(){})
+	 */
 	View.prototype._bindItemEditCancel = function (handler) {
 		var self = this;
 		$delegate(self.$todoList, 'li .edit', 'keyup', function (event) {
@@ -174,6 +260,15 @@
 		});
 	};
 
+	/**
+	 * Bind an event
+	 *
+	 * @param {string} event The event to bind
+	 * @param {function} handler The function to trigger when the event occurs
+	 * 
+	 * @example
+	 * view.bind("newTodo", function(){})
+	 */
 	View.prototype.bind = function (event, handler) {
 		var self = this;
 		if (event === 'newTodo') {
